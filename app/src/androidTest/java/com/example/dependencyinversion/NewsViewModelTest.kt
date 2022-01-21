@@ -1,6 +1,7 @@
 package com.example.dependencyinversion
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.launchActivity
 import junit.framework.TestCase
 import org.junit.Rule
@@ -8,15 +9,19 @@ import java.util.concurrent.CountDownLatch
 
 class NewsViewModelTest : TestCase() {
 
-    private val signal = CountDownLatch(1)
-    private lateinit var viewModel: NewsViewModel;
+    private lateinit var signal: CountDownLatch
+    private lateinit var viewModel: NewsViewModel
+    private lateinit var scenario: ActivityScenario<MainActivity>
 
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     public override fun setUp() {
         super.setUp()
+
+        this.signal = CountDownLatch(1)
         this.viewModel = NewsViewModel();
+        this.scenario = launchActivity()
     }
 
     public override fun tearDown() {
@@ -24,20 +29,22 @@ class NewsViewModelTest : TestCase() {
     }
 
     fun testFetchData_makesNewsApiGetRequest_postValueToNewsItems() {
-
-        val scenario = launchActivity<MainActivity>()
-
-        scenario.onActivity { activity ->
+        
+        this.scenario.onActivity { activity ->
             activity.runOnUiThread {
                 this.viewModel.newsItems.observeForever() { items ->
                     assertEquals(3, items.size)
-                    signal.countDown()
+                    assertEquals("Title One", items[0])
+                    assertEquals("Title Two", items[1])
+                    assertEquals("Title Three", items[2])
+
+                    this.signal.countDown()
                 }
 
                 this.viewModel.fetchData()
             }
         }
 
-        signal.await()
+        this.signal.await()
     }
 }
