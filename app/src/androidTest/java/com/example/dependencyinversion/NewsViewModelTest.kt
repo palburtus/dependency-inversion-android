@@ -20,7 +20,7 @@ class NewsViewModelTest : TestCase() {
         super.setUp()
 
         this.signal = CountDownLatch(1)
-        this.viewModel = NewsViewModel();
+        this.viewModel = NewsViewModel()
         this.scenario = launchActivity()
     }
 
@@ -29,7 +29,7 @@ class NewsViewModelTest : TestCase() {
     }
 
     fun testFetchData_makesNewsApiGetRequest_postValueToNewsItems() {
-        
+
         this.scenario.onActivity { activity ->
             activity.runOnUiThread {
                 this.viewModel.newsItems.observeForever() { items ->
