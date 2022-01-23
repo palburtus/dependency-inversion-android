@@ -3,6 +3,7 @@ package com.example.dependencyinversion
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.launchActivity
+import com.example.dependencyinversion.mocks.MockNewsClient
 import junit.framework.TestCase
 import org.junit.Rule
 import java.util.concurrent.CountDownLatch
@@ -20,7 +21,7 @@ class NewsViewModelTest : TestCase() {
         super.setUp()
 
         this.signal = CountDownLatch(1)
-        this.viewModel = NewsViewModel()
+        this.viewModel = NewsViewModel(MockNewsClient())
         this.scenario = launchActivity()
     }
 
@@ -33,10 +34,23 @@ class NewsViewModelTest : TestCase() {
         this.scenario.onActivity { activity ->
             activity.runOnUiThread {
                 this.viewModel.newsItems.observeForever() { items ->
+
                     assertEquals(3, items.size)
-                    assertEquals("Title One", items[0])
-                    assertEquals("Title Two", items[1])
-                    assertEquals("Title Three", items[2])
+
+                    assertEquals("Title One", items[0].title)
+                    assertEquals("describe 1", items[0].newsMetaData.description)
+                    assertEquals("http://www.image.com/1", items[0].newsMetaData.imageUrl)
+                    assertEquals("http://test.com/article1", items[0].newsMetaData.url)
+
+                    assertEquals("Title Two", items[1].title)
+                    assertEquals("describe 2", items[1].newsMetaData.description)
+                    assertEquals("http://www.image.com/2", items[1].newsMetaData.imageUrl)
+                    assertEquals("http://test.com/article2", items[1].newsMetaData.url)
+
+                    assertEquals("Title Three", items[2].title)
+                    assertEquals("describe 3", items[2].newsMetaData.description)
+                    assertEquals("http://www.image.com/3", items[2].newsMetaData.imageUrl)
+                    assertEquals("http://test.com/article3", items[2].newsMetaData.url)
 
                     this.signal.countDown()
                 }
