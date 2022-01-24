@@ -1,9 +1,10 @@
 package com.example.dependencyinversion.api
 
-import com.example.dependencyinversion.model.NewsArticle
+import com.example.dependencyinversion.callbacks.INewsCallback
+
 
 interface INewsClient {
-    fun get(): List<NewsArticle>
+    fun get(callback: INewsCallback)
 }
 
 

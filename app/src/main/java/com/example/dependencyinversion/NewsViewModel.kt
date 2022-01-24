@@ -3,8 +3,8 @@ package com.example.dependencyinversion
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.dependencyinversion.api.INewsClient
+import com.example.dependencyinversion.callbacks.INewsCallback
 import com.example.dependencyinversion.model.NewsArticle
-import com.example.dependencyinversion.model.NewsMetaData
 
 class NewsViewModel(private val newsClient: INewsClient) : ViewModel() {
 
@@ -12,8 +12,16 @@ class NewsViewModel(private val newsClient: INewsClient) : ViewModel() {
 
     fun fetchData(){
 
-        val articles = this.newsClient.get();
+        this.newsClient.get(object: INewsCallback {
+            override fun onSuccess(articles: List<NewsArticle>) {
+                newsItems.postValue(articles);
+            }
 
-        newsItems.postValue(articles);
+            override fun onError(message: String) {
+                TODO("Not yet implemented")
+            }
+
+        });
     }
+
 }
