@@ -52,6 +52,8 @@ class NewsViewModelTest : TestCase() {
                     assertEquals("http://www.image.com/3", items[2].newsMetaData.imageUrl)
                     assertEquals("http://test.com/article3", items[2].newsMetaData.url)
 
+                    assertEquals("", viewModel.errorMessage.value)
+
                     this.signal.countDown()
                 }
 
@@ -60,5 +62,9 @@ class NewsViewModelTest : TestCase() {
         }
 
         this.signal.await()
+    }
+
+    fun testFetchData_apiError_postValueToErrorMessage() {
+        assertFalse(true)
     }
 }

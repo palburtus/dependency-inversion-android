@@ -8,9 +8,12 @@ import com.example.dependencyinversion.model.NewsArticle
 
 class NewsViewModel(private val newsClient: INewsClient) : ViewModel() {
 
-    val newsItems: MutableLiveData<List<NewsArticle>> = MutableLiveData();
+    val newsItems: MutableLiveData<List<NewsArticle>> = MutableLiveData()
+    val errorMessage: MutableLiveData<String> = MutableLiveData()
 
     fun fetchData(){
+
+        errorMessage.postValue("")
 
         this.newsClient.get(object: INewsCallback {
             override fun onSuccess(articles: List<NewsArticle>) {
@@ -18,9 +21,8 @@ class NewsViewModel(private val newsClient: INewsClient) : ViewModel() {
             }
 
             override fun onError(message: String) {
-                TODO("Not yet implemented")
+                errorMessage.postValue(message)
             }
-
         });
     }
 
