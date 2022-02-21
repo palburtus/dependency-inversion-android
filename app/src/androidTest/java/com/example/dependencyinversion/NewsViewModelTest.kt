@@ -5,6 +5,8 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.launchActivity
 import com.example.dependencyinversion.mocks.MockErrorNewsClient
 import com.example.dependencyinversion.mocks.MockNewsClient
+import com.example.dependencyinversion.ui.MainActivity
+import com.example.dependencyinversion.ui.NewsViewModel
 import junit.framework.TestCase
 import org.junit.Rule
 import org.mockito.MockitoAnnotations
@@ -29,6 +31,10 @@ class NewsViewModelTest : TestCase() {
 
     public override fun tearDown() {
 
+    }
+
+    fun testFetchData_errorShouldBeClearedWhenNewRequestMade_postEmptyStringToErrorMessage(){
+        assertFalse(true)
     }
 
     fun testFetchData_makesNewsApiGetRequest_postValueToNewsItems() {

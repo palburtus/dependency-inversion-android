@@ -1,11 +1,12 @@
-package com.example.dependencyinversion
+package com.example.dependencyinversion.ui
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
+import com.example.dependencyinversion.R
 
 class NewsFragment : Fragment() {
 
@@ -24,7 +25,7 @@ class NewsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(NewsViewModel::class.java)
+        viewModel = ViewModelProvider(this)[NewsViewModel::class.java]
     }
 
 }

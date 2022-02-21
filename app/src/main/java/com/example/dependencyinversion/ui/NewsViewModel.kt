@@ -1,4 +1,4 @@
-package com.example.dependencyinversion
+package com.example.dependencyinversion.ui
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -17,13 +17,13 @@ class NewsViewModel(private val newsClient: INewsClient) : ViewModel() {
 
         this.newsClient.get(object: INewsCallback {
             override fun onSuccess(articles: List<NewsArticle>) {
-                newsItems.postValue(articles);
+                newsItems.postValue(articles)
             }
 
             override fun onError(message: String) {
                 errorMessage.postValue(message)
             }
-        });
+        })
     }
 
 }

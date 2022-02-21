@@ -1,8 +1,9 @@
-package com.example.dependencyinversion
+package com.example.dependencyinversion.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.dependencyinversion.R
 
 class NewsAdapter(private val items: Array<String>) : RecyclerView.Adapter<NewViewHolder>() {
 
